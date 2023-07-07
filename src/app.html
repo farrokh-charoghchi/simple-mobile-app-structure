@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    
+    
+    <!-- app styles -->
+    <style>
+    *{
+        box-sizing: border-box;
+    }
+    .app-main {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        display: flex;
+        flex-direction: column;
+    }
+    .app-top,.app-bottom{
+        flex: 0 auto;
+    }
+    .app-mid{
+        flex: 1 0;
+        position: relative;
+    }
+    .app-mid > div{
+        position: absolute;
+        overflow-y: scroll;
+    }
+    
+    .app-menu-left{
+        z-index: 100;
+    }
+    .app-content{
+        z-index: 1;
+    }
+    .app-menu-right{
+        z-index: 100;
+    }
+
+
+
+    .app-menu-shader::before{
+        content: '';
+        position: absolute;
+        top:0px;
+        bottom: 0px;
+        right: 0px;
+        left: 0px;
+        background-color: rgba(0,0,0,0.0);
+        z-index: 10;
+        visibility: hidden;
+        transition: all linear 100ms ;
+    }
+    .show-menu-left .app-menu-shader::before,
+    .show-menu-right .app-menu-shader::before{
+        visibility: visible;
+        background-color: rgba(0,0,0,0.7);
+        transition: all linear 100ms ;
+    }
+    </style>
+    
+    <!-- sizing styles -->
+    <style>
+    .app-content{
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+    }
+    .app-menu-left{
+        top: 0px;
+        left: 0px;
+        right: 20%;
+        bottom: 0px;
+        transform: translateX(-100%);
+    }
+    .show-menu-left .app-menu-left{
+        transform: translateX(0);
+    }
+
+    .app-menu-right{
+        top: 0px;
+        left: 20%;
+        right: 0px;
+        bottom: 0px;
+        transform: translateX(100%);
+    }
+    .show-menu-right .app-menu-right{
+        transform: translateX(0);
+    }
+    </style>
+    
+    <!-- helper styles -->
+    <style>
+    .trn-ease-100{
+        transition: all ease-in-out 100ms;
+    }
+    </style>
+
+    <!-- ignore styles -->
+    <style>
+    .app-main {
+        background-color: #EEE;
+    }
+    .app-top {
+        background-color: #DDD;
+    }
+    .app-bottom {
+        background-color: #DDD;
+    }
+    .app-top,.app-bottom{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .app-menu-left{
+        background-color: rgba(255,0,0,0.7);
+    }
+    .app-menu-right{
+        background-color: rgba(0,255,0,0.7);
+    }
+    </style>
+    
+    <!-- test style -->
+    <style>
+    
+    </style>
+</head>
+<body>
+    <div class="app-main">
+        <div class="app-top">
+            <input style="padding: 10px;" type="button" value="menu left" onclick="AppMain.showMenu('left')" />
+            <span>nav-top</span>
+            <input style="padding: 10px;" type="button" value="menu right" onclick="AppMain.showMenu('right')" />
+        </div>
+        <div class="app-mid app-menu-shader">
+            <div class="app-menu-left trn-ease-100">
+                app-menu-left<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                app-menu-left<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                app-menu-left<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                app-menu-left<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                app-menu-left<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                app-menu-left<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                app-menu-left<br /><br /><br /><br /><br /><br /><br /><br /><br />
+            </div>
+            <div class="app-content">
+                
+                app-content<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                app-content<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                app-content<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                app-content<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                app-content<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                app-content<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                app-content<br /><br /><br /><br /><br /><br /><br /><br /><br /> 
+                
+            </div>
+            <div class="app-menu-right trn-ease-100">
+                app-menu-right<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                app-menu-right<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                app-menu-right<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                app-menu-right<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                app-menu-right<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                app-menu-right<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                app-menu-right<br /><br /><br /><br /><br /><br /><br /><br /><br />
+            </div>
+        </div>
+        <div class="app-bottom">
+            <input style="padding: 10px;" type="button" value="menu left" onclick="AppMain.showMenu('left')" />
+            <span>nav-bottom</span>
+            <input style="padding: 10px;" type="button" value="menu right" onclick="AppMain.showMenu('right')" />
+        </div>
+    </div>
+
+
+
+    <script>
+        HTMLCollection.prototype.toArray = function () {
+            return [].slice.call(this);
+        }
+    </script>
+    <script>
+        window.AppMain = new function(){
+            var self = this;
+            var appMain = document.getElementsByClassName('app-main')[0];
+            var appMenuLeft = document.getElementsByClassName('app-menu-left')[0];
+            var appMenuRight = document.getElementsByClassName('app-menu-right')[0];
+            
+            appMain.onclick = function(){
+                hideAllMenus();
+            }
+            appMenuLeft.onclick = function(){
+                event.stopPropagation();
+            }
+            appMenuRight.onclick = function(){
+                event.stopPropagation();
+            }
+
+
+            var hideAllMenus = function(){
+                
+                appMain.classList.remove('show-menu-left');
+                appMain.classList.remove('show-menu-right');
+            }
+
+            self.showMenu = function(side){
+                event.stopPropagation();
+                hideAllMenus();
+                appMain.classList.add('show-menu-'+side);
+            }
+            self.hideAllMenus = function(){
+                hideAllMenus();
+            }
+
+            
+        }
+    </script>
+</body>
+</html>
