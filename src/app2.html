@@ -8,8 +8,9 @@
     
     
     
-    <!-- app styles -->
     <style>
+
+    /* app styles */
     *{
         box-sizing: border-box;
     }
@@ -28,11 +29,46 @@
     .app-mid{
         flex: 1 0;
         position: relative;
+        display: flex;
+        flex-direction: row;
     }
-    .app-mid > div{
+    .app-mid .app-mid-item{
+        position: relative;
+    }
+    .app-mid .app-mid-item .app-mid-item-content{
         position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
         overflow-y: scroll;
     }
+    .app-mid .app-content{
+        flex:1 0;
+    }
+    
+    .app-menu-right.floating{
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        right: 0px;
+        transform: translateX(100%);
+    }
+    .app-menu-right.floating.floating-show{
+        transform: translateX(0%);
+    }
+
+    .app-menu-left.floating{
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        transform: translateX(-100%);
+    }
+    .app-menu-left.floating.floating-show{
+        transform: translateX(0%);
+    }
+
     
     .app-menu-left{
         z-index: 100;
@@ -58,116 +94,62 @@
         visibility: hidden;
         transition: all linear 100ms ;
     }
-    .show-menu-left .app-menu-shader::before,
-    .show-menu-right .app-menu-shader::before{
+    .show-menu .app-menu-shader::before{
         visibility: visible;
         background-color: rgba(0,0,0,0.7);
         transition: all linear 100ms ;
     }
-    </style>
     
-    <!-- sizing styles -->
-    <style>
-    .app-content{
-        top: 0px;
-        left: 0px;
-        right: 0px;
-        bottom: 0px;
-    }
+    
+    /* sizing styles */
+    .app-menu-right,
     .app-menu-left{
-        top: 0px;
-        left: 0px;
-        right: 20%;
-        bottom: 0px;
-        transform: translateX(-100%);
+        width: 80%;
     }
 
     @media (min-width: 576px) {
+        .app-menu-right,
         .app-menu-left{
-            right: 40%;
+            width: 60%;
         }
     }
 
     @media (min-width: 768px) {
+        .app-menu-right,
         .app-menu-left{
-            right: 55%;
+            width: 45%;
         }
     }
 
     @media (min-width: 992px) {
+        .app-menu-right,
         .app-menu-left{
-            right: 63%;
+            width: 37%;
         }
     }
 
     @media (min-width: 1200px) {
+        .app-menu-right,
         .app-menu-left{
-            right: 71%;
+            width: 29%;
         }
     }
 
     @media (min-width: 1400px) {
+        .app-menu-right,
         .app-menu-left{
-            right: 75%;
+            width: 25%;
         }
     }
-
-    .show-menu-left .app-menu-left{
-        transform: translateX(0);
-    }
-
-    .app-menu-right{
-        top: 0px;
-        left: 20%;
-        right: 0px;
-        bottom: 0px;
-        transform: translateX(100%);
-    }
-
-    @media (min-width: 576px) {
-        .app-menu-right{
-            left: 40%;
-        }
-    }
-
-    @media (min-width: 768px) {
-        .app-menu-right{
-            left: 55%;
-        }
-    }
-
-    @media (min-width: 992px) {
-        .app-menu-right{
-            left: 63%;
-        }
-    }
-
-    @media (min-width: 1200px) {
-        .app-menu-right{
-            left: 71%;
-        }
-    }
-
-    @media (min-width: 1400px) {
-        .app-menu-right{
-            left: 75%;
-        }
-    }
-
-    .show-menu-right .app-menu-right{
-        transform: translateX(0);
-    }
-    </style>
     
-    <!-- helper styles -->
-    <style>
+    
+    /* helper styles */
     .trn-ease-100{
         transition: all ease-in-out 100ms;
     }
-    </style>
-
-    <!-- ignore styles -->
-    <style>
+    
+    
+    /* ignore styles */
     @media (min-width: 576px) {
     }
 
@@ -179,6 +161,10 @@
 
     @media (min-width: 1200px) {
     }
+
+    @media (min-width: 1400px) {
+    }
+
     .app-content{
         background-color: yellow;
         border: solid 5px red;
@@ -204,73 +190,85 @@
     .app-menu-right{
         background-color: rgba(0,255,0,0.7);
     }
-    </style>
+
+    /* test style */
     
-    <!-- test style -->
-    <style>
-    /* .fixed-menu-right .app-content{
-        display: block;
-    }
-    .fixed-menu-right .app-menu-right{
-        display: block;
-    } */
-    /* .fixed-menu-right .app-mid{
-        display: flex;
-        flex-direction: row;
-    }
-    .fixed-menu-right .app-mid > div{
-        position: unset;
-    } */
     </style>
 </head>
 <body>
-    <div class="app-main fixed-menu-right">
-        <div class="app-top">
-            <input style="padding: 10px;" type="button" value="menu left" onclick="AppMain.showMenu('left')" />
-            <span>nav-top</span>
-            <input style="padding: 10px;" type="button" value="menu right" onclick="AppMain.showMenu('right')" />
-        </div>
+    <div class="app-main">
+        <!-- <div class="app-top">
+            <div>
+                <input style="padding: 10px;" type="button" value="show left" onclick="AppMain.showMenu('left')" />
+                <input style="padding: 10px;" type="button" value="fix left" onclick="AppMain.fixMenu('left')" />
+            </div>
+            <span>top</span>
+            <div>
+                <input style="padding: 10px;" type="button" value="fix right" onclick="AppMain.fixMenu('right')" />
+                <input style="padding: 10px;" type="button" value="show right" onclick="AppMain.showMenu('right')" />
+            </div>
+        </div> -->
         <div class="app-mid app-menu-shader">
-            <div class="app-menu-left trn-ease-100">
-                app-menu-left<br /><br /><br /><br /><br /><br /><br /><br /><br />
-                app-menu-left<br /><br /><br /><br /><br /><br /><br /><br /><br />
-                app-menu-left<br /><br /><br /><br /><br /><br /><br /><br /><br />
-                app-menu-left<br /><br /><br /><br /><br /><br /><br /><br /><br />
-                app-menu-left<br /><br /><br /><br /><br /><br /><br /><br /><br />
-                app-menu-left<br /><br /><br /><br /><br /><br /><br /><br /><br />
-                app-menu-left<br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <div class="app-mid-item app-menu-left floating trn-ease-100">  
+                <div class="app-mid-item-content">
+                    app-menu-left<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    app-menu-left<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    
+                    app-menu-left<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    app-menu-left<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    app-menu-left<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    app-menu-left<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    app-menu-left<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    
+                    
+                </div>
             </div>
-            <div class="app-content">
-                
-                app-content<br /><br /><br /><br /><br /><br /><br /><br /><br />
-                app-content<br /><br /><br /><br /><br /><br /><br /><br /><br />
-                app-content<br /><br /><br /><br /><br /><br /><br /><br /><br />
-                app-content<br /><br /><br /><br /><br /><br /><br /><br /><br />
-                app-content<br /><br /><br /><br /><br /><br /><br /><br /><br />
-                app-content<br /><br /><br /><br /><br /><br /><br /><br /><br />
-                app-content<br /><br /><br /><br /><br /><br /><br /><br /><br /> 
-                
+            <div class="app-mid-item app-content">
+                <div class="app-mid-item-content">
+                    <div id="winWidth"></div>
+                    app-content<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    app-content<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    
+                    app-content<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    app-content<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    app-content<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    app-content<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    app-content<br /><br /><br /><br /><br /><br /><br /><br /><br /> 
+                    
+                </div>
             </div>
-            <div class="app-menu-right trn-ease-100">
-                app-menu-right<br /><br /><br /><br /><br /><br /><br /><br /><br />
-                app-menu-right<br /><br /><br /><br /><br /><br /><br /><br /><br />
-                app-menu-right<br /><br /><br /><br /><br /><br /><br /><br /><br />
-                app-menu-right<br /><br /><br /><br /><br /><br /><br /><br /><br />
-                app-menu-right<br /><br /><br /><br /><br /><br /><br /><br /><br />
-                app-menu-right<br /><br /><br /><br /><br /><br /><br /><br /><br />
-                app-menu-right<br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <div class="app-mid-item app-menu-right floating trn-ease-100">
+                <div class="app-mid-item-content">
+                    app-menu-right<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    app-menu-right<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    
+                    app-menu-right<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    app-menu-right<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    app-menu-right<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    app-menu-right<br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    app-menu-right<br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+                </div>
             </div>
         </div>
         <div class="app-bottom">
-            <input style="padding: 10px;" type="button" value="menu left" onclick="AppMain.showMenu('left')" />
-            <span>nav-bottom</span>
-            <input style="padding: 10px;" type="button" value="menu right" onclick="AppMain.showMenu('right')" />
+            <div>
+                <input style="padding: 10px;" type="button" value="toggle L" onclick="AppMain.toggleMenu('left')" />
+                <input style="padding: 10px;" type="button" value="fix left" onclick="AppMain.fixMenu('left')" />
+            </div>
+            <span>btm</span>
+            <div>
+                <input style="padding: 10px;" type="button" value="fix right" onclick="AppMain.fixMenu('right')" />
+                <input style="padding: 10px;" type="button" value="toggle R" onclick="AppMain.toggleMenu('right')" />
+            </div>
         </div>
     </div>
 
 
 
     <script>
+        
+        document.getElementById('winWidth').innerHTML = window.innerWidth;
         HTMLCollection.prototype.toArray = function () {
             return [].slice.call(this);
         }
@@ -278,38 +276,153 @@
     <script>
         window.AppMain = new function(){
             var self = this;
+
+            /** حداقل عرض که اجازه فیکس کردن منو را میدهد */
+            var minWidthFixAllowed = 992;
             var appMain = document.getElementsByClassName('app-main')[0];
             var appMenuLeft = document.getElementsByClassName('app-menu-left')[0];
             var appMenuRight = document.getElementsByClassName('app-menu-right')[0];
             
-            appMain.onclick = function(){
-                hideAllMenus();
+            if (appMain) {
+                appMain.onclick = function(){
+                    hideAllMenus();
+                }
             }
-            appMenuLeft.onclick = function(){
-                event.stopPropagation();
+            if (appMenuLeft) {
+                appMenuLeft.onclick = function(){
+                    event.stopPropagation();
+                }
             }
-            appMenuRight.onclick = function(){
-                event.stopPropagation();
+            if (appMenuRight) {
+                appMenuRight.onclick = function(){
+                    event.stopPropagation();
+                }
             }
 
+            var getSideMenuItem = function(side){
+                if (side==='left') {
+                    return appMenuLeft;
+                } else if (side==='right') {
+                    return appMenuRight;
+                }
+                return null;
+            }
 
+            var hideMenu = function(menu){
+                if (menu) {
+                    menu.classList.remove('floating-show');
+                    appMain.classList.remove('show-menu');
+                }
+            }
+            
             var hideAllMenus = function(){
-                
-                appMain.classList.remove('show-menu-left');
-                appMain.classList.remove('show-menu-right');
+                hideMenu(appMenuLeft);
+                hideMenu(appMenuRight);
             }
 
+            var showMenu = function(menu){
+                if (menu) {
+                    menu.classList.add('floating-show');
+                }
+                appMain.classList.add('show-menu');
+            }
+            var isMenuShowing = function(menu){
+                if (menu) {
+                    return menu.classList.contains('floating-show');
+                }
+                return null;
+            }
+            var isMenuFixed = function(menu){
+                if (menu) {
+                    return !menu.classList.contains('floating');
+                }
+                return null;
+            }
+
+            var fixMenu = function(menu){
+                if (menu && isFixingAllowed()) {
+                    menu.classList.remove('floating');
+                }
+            }
+
+            var unfixMenu = function(menu){
+                if (menu) {
+                    menu.classList.add('floating');
+                }
+            }
+
+            var isFixingAllowed = function(){
+                return window.innerWidth >= minWidthFixAllowed;
+            }
+
+            self.config = {
+                rightMenuFixedAtStartup: true,
+                leftMenuFixedAtStartup: false,
+            };
+
+            self.fixMenu = function(side){
+                event.stopPropagation();
+                var menu = getSideMenuItem(side);
+                if (!menu) {
+                    return null;
+                }
+                hideMenu(menu);
+                if (isMenuFixed(menu) === false) {
+                    fixMenu(menu);
+                    return true;
+                } else if (isMenuFixed(menu) === true){
+                    unfixMenu(menu);
+                    return false;
+                }
+                return null;
+            }
             self.showMenu = function(side){
                 event.stopPropagation();
                 hideAllMenus();
-                appMain.classList.add('show-menu-'+side);
+                var menu = getSideMenuItem(side);
+                showMenu(menu);
+            }
+            self.hideMenu = function(side){
+                event.stopPropagation();
+                var menu = getSideMenuItem(side);
+                hideMenu(menu);
             }
             self.hideAllMenus = function(){
                 hideAllMenus();
             }
+            self.isFixingAllowed = function(){
+                return isFixingAllowed();
+            }
+            self.isMenuShowing = function(){
+                return isMenuShowing();
+            }
+            self.toggleMenu = function(side){
+                event.stopPropagation();
+                var menu = getSideMenuItem(side);
+                var isShowing = isMenuShowing(menu);
+                hideAllMenus();
+                if (isShowing === false) {
+                    showMenu(menu);
+                }
+            }
 
-            
+            self.init = function(){
+                if (isFixingAllowed()) {
+                    (self.config.leftMenuFixedAtStartup && fixMenu(appMenuLeft));
+                    (self.config.rightMenuFixedAtStartup && fixMenu(appMenuRight));
+                } else {
+                    unfixMenu(appMenuLeft);
+                    unfixMenu(appMenuRight);
+                }
+            }
         }
+
+
+
+        //AppMain.config.leftMenuFixedAtStartup = true;
+        //AppMain.config.rightMenuFixedAtStartup = false;
+
+        AppMain.init();
     </script>
 </body>
 </html>
