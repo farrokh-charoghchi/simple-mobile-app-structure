@@ -1,0 +1,132 @@
+/* app styles */
+*{
+    box-sizing: border-box;
+}
+.app-main {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    display: flex;
+    flex-direction: column;
+}
+.app-top,.app-bottom{
+    flex: 0 auto;
+}
+.app-mid{
+    flex: 1 0;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+.app-mid .app-mid-item{
+    position: relative;
+}
+.app-mid .app-mid-item .app-mid-item-content{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    overflow-y: scroll;
+}
+.app-mid .app-content{
+    flex:1 0;
+}
+
+.app-menu-right.floating{
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    transform: translateX(100%);
+}
+.app-menu-right.floating.floating-show{
+    transform: translateX(0%);
+}
+
+.app-menu-left.floating{
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    transform: translateX(-100%);
+}
+.app-menu-left.floating.floating-show{
+    transform: translateX(0%);
+}
+
+
+.app-menu-left,
+.app-menu-right
+{
+    z-index: 100;
+    transition: all cubic-bezier(0.6, 0.04, 0.04, 0.99) 400ms;
+}
+.app-content{
+    z-index: 1;
+}
+
+
+
+
+.app-menu-shader::before{
+    content: '';
+    position: absolute;
+    top:0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    background-color: rgba(0,0,0,0.0);
+    z-index: 10;
+    visibility: hidden;
+    transition: all linear 50ms ;
+}
+.show-menu .app-menu-shader::before{
+    visibility: visible;
+    background-color: rgba(0,0,0,0.3);
+    transition: all linear 100ms ;
+}
+
+
+/* sizing styles */
+.app-menu-right,
+.app-menu-left{
+    width: 80%;
+}
+
+@media (min-width: 576px) {
+    .app-menu-right,
+    .app-menu-left{
+        width: 60%;
+    }
+}
+
+@media (min-width: 768px) {
+    .app-menu-right,
+    .app-menu-left{
+        width: 45%;
+    }
+}
+
+@media (min-width: 992px) {
+    .app-menu-right,
+    .app-menu-left{
+        width: 37%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .app-menu-right,
+    .app-menu-left{
+        width: 29%;
+    }
+}
+
+@media (min-width: 1400px) {
+    .app-menu-right,
+    .app-menu-left{
+        width: 25%;
+    }
+}
