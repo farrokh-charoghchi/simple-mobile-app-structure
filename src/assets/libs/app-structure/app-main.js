@@ -3,23 +3,39 @@ window.AppStructure = new function(){
 
     /** حداقل عرض که اجازه فیکس کردن منو را میدهد */
     var minWidthFixAllowed = 992;
-    var appMain = document.getElementsByClassName('app-main')[0];
-    var appMenuLeft = document.getElementsByClassName('app-menu-left')[0];
-    var appMenuRight = document.getElementsByClassName('app-menu-right')[0];
+    var appMain = null;
+    var appMenuLeft = null;
+    var appMenuRight = null;
     
-    if (appMain) {
-        appMain.onclick = function(){
-            hideAllMenus();
+    
+    var init = function () {
+        appMain = document.getElementsByClassName('app-main')[0];
+        appMenuLeft = document.getElementsByClassName('app-menu-left')[0];
+        appMenuRight = document.getElementsByClassName('app-menu-right')[0];
+
+        if (appMain) {
+            appMain.onclick = function(){
+                hideAllMenus();
+            }
         }
-    }
-    if (appMenuLeft) {
-        appMenuLeft.onclick = function(){
-            event.stopPropagation();
+        if (appMenuLeft) {
+            appMenuLeft.onclick = function(){
+                event.stopPropagation();
+            }
         }
-    }
-    if (appMenuRight) {
-        appMenuRight.onclick = function(){
-            event.stopPropagation();
+        if (appMenuRight) {
+            appMenuRight.onclick = function(){
+                event.stopPropagation();
+            }
+        }
+
+
+        if (isFixingAllowed()) {
+            (self.config.leftMenuFixedAtStartup && fixMenu(appMenuLeft));
+            (self.config.rightMenuFixedAtStartup && fixMenu(appMenuRight));
+        } else {
+            unfixMenu(appMenuLeft);
+            unfixMenu(appMenuRight);
         }
     }
 
@@ -133,12 +149,6 @@ window.AppStructure = new function(){
     }
 
     self.init = function(){
-        if (isFixingAllowed()) {
-            (self.config.leftMenuFixedAtStartup && fixMenu(appMenuLeft));
-            (self.config.rightMenuFixedAtStartup && fixMenu(appMenuRight));
-        } else {
-            unfixMenu(appMenuLeft);
-            unfixMenu(appMenuRight);
-        }
+        init();
     }
 }
