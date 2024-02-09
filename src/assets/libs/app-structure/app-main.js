@@ -1,4 +1,4 @@
-window.AppMain = new function(){
+window.AppStructure = new function(){
     var self = this;
 
     /** حداقل عرض که اجازه فیکس کردن منو را میدهد */

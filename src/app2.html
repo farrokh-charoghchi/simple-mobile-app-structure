@@ -58,13 +58,13 @@
     <div class="app-main">
         <div class="app-top">
             <div>
-                <input style="padding: 10px;" type="button" value="show left" onclick="AppMain.showMenu('left')" />
-                <input style="padding: 10px;" type="button" value="fix left" onclick="AppMain.toggleFixMenu('left')" />
+                <input style="padding: 10px;" type="button" value="show left" onclick="AppStructure.showMenu('left')" />
+                <input style="padding: 10px;" type="button" value="fix left" onclick="AppStructure.toggleFixMenu('left')" />
             </div>
             <span>top</span>
             <div>
-                <input style="padding: 10px;" type="button" value="fix right" onclick="AppMain.toggleFixMenu('right')" />
-                <input style="padding: 10px;" type="button" value="show right" onclick="AppMain.showMenu('right')" />
+                <input style="padding: 10px;" type="button" value="fix right" onclick="AppStructure.toggleFixMenu('right')" />
+                <input style="padding: 10px;" type="button" value="show right" onclick="AppStructure.showMenu('right')" />
             </div>
         </div>
         <div class="app-mid">
@@ -112,34 +112,23 @@
         </div>
         <div class="app-bottom">
             <div>
-                <input style="padding: 10px;" type="button" value="toggle L" onclick="AppMain.toggleMenu('left')" />
-                <input style="padding: 10px;" type="button" value="fix left" onclick="AppMain.toggleFixMenu('left')" />
+                <input style="padding: 10px;" type="button" value="toggle L" onclick="AppStructure.toggleMenu('left')" />
+                <input style="padding: 10px;" type="button" value="fix left" onclick="AppStructure.toggleFixMenu('left')" />
             </div>
             <span>btm</span>
             <div>
-                <input style="padding: 10px;" type="button" value="fix right" onclick="AppMain.toggleFixMenu('right')" />
-                <input style="padding: 10px;" type="button" value="toggle R" onclick="AppMain.toggleMenu('right')" />
+                <input style="padding: 10px;" type="button" value="fix right" onclick="AppStructure.toggleFixMenu('right')" />
+                <input style="padding: 10px;" type="button" value="toggle R" onclick="AppStructure.toggleMenu('right')" />
             </div>
         </div>
     </div>
 
 
-
-    <script>
-        
-        document.getElementById('winWidth').innerHTML = window.innerWidth;
-        // HTMLCollection.prototype.toArray = function () {
-        //     return [].slice.call(this);
-        // }
-    </script>
     <script src="assets/libs/app-structure/app-main.js"></script>
     <script>
-        
-
-        AppMain.config.leftMenuFixedAtStartup = true;
-        AppMain.config.rightMenuFixedAtStartup = false;
-
-        AppMain.init();
+        AppStructure.config.leftMenuFixedAtStartup = true;
+        AppStructure.config.rightMenuFixedAtStartup = false;
+        AppStructure.init();
     </script>
 </body>
 </html>
