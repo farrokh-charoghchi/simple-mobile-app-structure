@@ -20,12 +20,12 @@ window.AppStructure = new function(){
         }
         if (appMenuLeft) {
             appMenuLeft.onclick = function(){
-                event.stopPropagation();
+                (event && event.stopPropagation());
             }
         }
         if (appMenuRight) {
             appMenuRight.onclick = function(){
-                event.stopPropagation();
+                (event && event.stopPropagation());
             }
         }
 
@@ -101,7 +101,7 @@ window.AppStructure = new function(){
     };
 
     self.toggleFixMenu = function(side){
-        event.stopPropagation();
+        (event && event.stopPropagation());
         var menu = getSideMenuItem(side);
         if (!menu) {
             return null;
@@ -117,7 +117,7 @@ window.AppStructure = new function(){
         return null;
     }
     self.showMenu = function(side){
-        event.stopPropagation();
+        (event && event.stopPropagation());
         hideAllMenus();
         var menu = getSideMenuItem(side);
         if (!isMenuFixed(menu)) {
@@ -125,7 +125,7 @@ window.AppStructure = new function(){
         }
     }
     self.hideMenu = function(side){
-        event.stopPropagation();
+        (event && event.stopPropagation());
         var menu = getSideMenuItem(side);
         hideMenu(menu);
     }
@@ -135,11 +135,12 @@ window.AppStructure = new function(){
     self.isFixingAllowed = function(){
         return isFixingAllowed();
     }
-    self.isMenuShowing = function(){
-        return isMenuShowing();
+    self.isMenuShowing = function(side){
+        var menu = getSideMenuItem(side);
+        return isMenuShowing(menu);
     }
     self.toggleMenu = function(side){
-        event.stopPropagation();
+        (event && event.stopPropagation());
         var menu = getSideMenuItem(side);
         var isShowing = isMenuShowing(menu);
         hideAllMenus();
