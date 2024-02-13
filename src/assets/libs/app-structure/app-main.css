@@ -79,7 +79,7 @@
     right: 0px;
     left: 0px;
     background-color: rgba(0,0,0,0.0);
-    z-index: 10;
+    z-index: 1000000;
     visibility: hidden;
     transition: all linear 50ms ;
 }
