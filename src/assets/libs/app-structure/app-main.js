@@ -1,3 +1,28 @@
+var EventEmmiter = function(){
+    var self = this;
+
+    var fn_list = [];
+
+    /**
+     * adds a function to subscription list for this event
+     * @param {function} fn
+     */
+    self.subscribe = function (fn) {
+        if (typeof(fn) === 'function') {
+            fn_list.push(fn);
+            return;
+        }
+        throw 'fn parameter IS NOT a function';
+    }
+
+    self.emmit = function (...args1) {
+        for (let i = 0; i < fn_list.length; i++) {
+            const fn = fn_list[i];
+            fn.apply(null,args1);
+        }
+    }
+}
+
 window.AppStructure = new function(){
     var self = this;
 
@@ -7,6 +32,11 @@ window.AppStructure = new function(){
     var appMenuLeft = null;
     var appMenuRight = null;
     
+    var ev_onFixed = new EventEmmiter();
+    
+
+
+    //#region private methods
     
     var init = function () {
         appMain = document.getElementsByClassName('app-main')[0];
@@ -31,8 +61,8 @@ window.AppStructure = new function(){
 
 
         if (isFixingAllowed()) {
-            (self.config.leftMenuFixedAtStartup && fixMenu(appMenuLeft));
-            (self.config.rightMenuFixedAtStartup && fixMenu(appMenuRight));
+            (self.config.leftMenuFixedAtStartup && fixMenu(appMenuLeft, 'left'));
+            (self.config.rightMenuFixedAtStartup && fixMenu(appMenuRight, 'right'));
         } else {
             unfixMenu(appMenuLeft);
             unfixMenu(appMenuRight);
@@ -79,9 +109,10 @@ window.AppStructure = new function(){
         return null;
     }
 
-    var fixMenu = function(menu){
+    var fixMenu = function(menu, side){
         if (menu && isFixingAllowed()) {
             menu.classList.remove('floating');
+            ev_onFixed.emmit(menu, side);
         }
     }
 
@@ -95,6 +126,10 @@ window.AppStructure = new function(){
         return window.innerWidth >= minWidthFixAllowed;
     }
 
+    //#endregion
+
+
+    //#region public methods
     self.config = {
         rightMenuFixedAtStartup: true,
         leftMenuFixedAtStartup: false,
@@ -108,7 +143,7 @@ window.AppStructure = new function(){
         }
         hideMenu(menu);
         if (isMenuFixed(menu) === false) {
-            fixMenu(menu);
+            fixMenu(menu, side);
             return true;
         } else if (isMenuFixed(menu) === true){
             unfixMenu(menu);
@@ -149,7 +184,16 @@ window.AppStructure = new function(){
         }
     }
 
+    /**
+     * menu fixed event
+     * @param {(menuElement: HTMLElement, menuSide: string) => void} fn 
+     */
+    self.onFixed = function (fn) {
+        ev_onFixed.subscribe(fn);
+    }
+
     self.init = function(){
         init();
     }
+    //#endregion
 }
