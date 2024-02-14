@@ -33,7 +33,8 @@ window.AppStructure = new function(){
     var appMenuRight = null;
     
     var ev_onFixed = new EventEmmiter();
-    
+    var ev_onUnFixed = new EventEmmiter();
+    var ev_onFixedChanged = new EventEmmiter();
 
 
     //#region private methods
@@ -64,8 +65,8 @@ window.AppStructure = new function(){
             (self.config.leftMenuFixedAtStartup && fixMenu(appMenuLeft, 'left'));
             (self.config.rightMenuFixedAtStartup && fixMenu(appMenuRight, 'right'));
         } else {
-            unfixMenu(appMenuLeft);
-            unfixMenu(appMenuRight);
+            unfixMenu(appMenuLeft, 'left');
+            unfixMenu(appMenuRight, 'right');
         }
     }
 
@@ -112,13 +113,18 @@ window.AppStructure = new function(){
     var fixMenu = function(menu, side){
         if (menu && isFixingAllowed()) {
             menu.classList.remove('floating');
+            
             ev_onFixed.emmit(menu, side);
+            ev_onFixedChanged.emmit(menu, side);
         }
     }
 
-    var unfixMenu = function(menu){
+    var unfixMenu = function(menu, side){
         if (menu) {
             menu.classList.add('floating');
+            
+            ev_onUnFixed.emmit(menu, side);
+            ev_onFixedChanged.emmit(menu, side);
         }
     }
 
@@ -146,7 +152,7 @@ window.AppStructure = new function(){
             fixMenu(menu, side);
             return true;
         } else if (isMenuFixed(menu) === true){
-            unfixMenu(menu);
+            unfixMenu(menu, side);
             return false;
         }
         return null;
@@ -190,6 +196,22 @@ window.AppStructure = new function(){
      */
     self.onFixed = function (fn) {
         ev_onFixed.subscribe(fn);
+    }
+
+    /**
+     * menu fixed event
+     * @param {(menuElement: HTMLElement, menuSide: string) => void} fn 
+     */
+    self.onUnFixed = function(fn) {
+        ev_onUnFixed.subscribe(fn);
+    }
+
+    /**
+     * menu fixed event
+     * @param {(menuElement: HTMLElement, menuSide: string) => void} fn 
+     */
+    self.onFixedChanged = function (fn) {
+        ev_onFixedChanged.subscribe(fn);
     }
 
     self.init = function(){
